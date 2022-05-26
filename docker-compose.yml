@@ -1,0 +1,127 @@
+version: '3.8'
+
+networks:
+  neo4j-internal:
+
+services:
+
+  core1:
+    image: neo4j:4.4-enterprise
+    hostname: core1
+    container_name: core1
+    networks:
+      neo4j-internal:
+        aliases:
+          - neo4j-network
+    ports:
+      - "17687:17687"
+      - "17474:17474"
+      - "16362:16362"
+      - "15002:15002"
+      - "16000:16000"
+      - "17000:17000"
+    environment:
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+
+    volumes:
+      - ./core1/data:/var/lib/neo4j/data
+      - ./core1/conf:/var/lib/neo4j/conf
+      - ./core1/logs:/var/lib/neo4j/logs
+      - ./core1/import:/var/lib/neo4j/import
+      - ./core1/metrics:/var/lib/neo4j/metrics
+      - ./core1/backups:/var/lib/neo4j/backups
+      - ./core1/plugins:/var/lib/neo4j/plugins
+
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider localhost:17474 || exit 1"]
+    depends_on:
+      - toxiproxy
+
+
+  core2:
+    image: neo4j:4.4-enterprise
+    hostname: core2
+    container_name: core2
+    networks:
+      neo4j-internal:
+        aliases:
+          - neo4j-network
+    ports:
+      - "27687:27687"
+      - "27474:27474"
+      - "26362:26362"
+      - "25000:25000"
+      - "26000:26000"
+      - "27000:27000"
+    environment:
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+    volumes:
+      - ./core2/data:/var/lib/neo4j/data
+      - ./core2/conf:/var/lib/neo4j/conf
+      - ./core2/logs:/var/lib/neo4j/logs
+      - ./core2/import:/var/lib/neo4j/import
+      - ./core2/metrics:/var/lib/neo4j/metrics
+      - ./core2/backups:/var/lib/neo4j/backups
+      - ./core2/plugins:/var/lib/neo4j/plugins
+
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider localhost:27474 || exit 1"]
+    depends_on:
+      - toxiproxy      
+
+  core3:
+    image: neo4j:4.4-enterprise
+    hostname: core3
+    container_name: core3
+    networks:
+      neo4j-internal:
+        aliases:
+          - neo4j-network
+    ports:
+      - "37687:37687"
+      - "37474:37474"
+      - "36362:36362"
+      - "35000:35000"
+      - "36000:36000"
+      - "37000:37000"
+    environment:
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+    volumes:
+      - ./core3/data:/var/lib/neo4j/data
+      - ./core3/conf:/var/lib/neo4j/conf
+      - ./core3/logs:/var/lib/neo4j/logs
+      - ./core3/import:/var/lib/neo4j/import
+      - ./core3/metrics:/var/lib/neo4j/metrics
+      - ./core3/backups:/var/lib/neo4j/backups
+      - ./core3/plugins:/var/lib/neo4j/plugins
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider localhost:37474 || exit 1"]
+    depends_on:
+      - toxiproxy      
+
+  toxiproxy:
+    build: ./toxiproxy
+    hostname: toxiproxy
+    container_name: toxiproxy
+    networks:
+      neo4j-internal:
+        aliases:
+          - neo4j-network
+    volumes:
+      - ./toxiproxy/conf:/config
+    ports:
+      - 6666:6666
+      - 15001:15001
+      - 25001:25001
+      - 35001:35001
+      - 16001:16001
+      - 26001:26001
+      - 36001:36001
+      - 7687:7687
+      - 8687:8687
+      - 9687:9687
+      - 7474:7474
+      - 8474:8474
+      - 9474:9474
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider localhost:6666 || exit 1"]

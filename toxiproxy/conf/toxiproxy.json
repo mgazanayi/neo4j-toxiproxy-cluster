@@ -1,0 +1,93 @@
+[
+  {
+    "name": "discovery_core_1",
+    "listen": "[::]:15001",
+    "upstream": "core1:15002",
+    "enabled": true
+  },
+ {
+    "name": "discovery_core_2",
+    "listen": "[::]:25001",
+    "upstream": "core2:25000",
+    "enabled": true
+  },
+ {
+    "name": "discovery_core_3",
+    "listen": "[::]:35001",
+    "upstream": "core3:35000",
+    "enabled": true
+  },  
+ {
+    "name": "transaction_core_1",
+    "listen": "[::]:16001",
+    "upstream": "core1:16000",
+    "enabled": true
+  },
+ {
+    "name": "transaction_core_2",
+    "listen": "[::]:26001",
+    "upstream": "core2:26000",
+    "enabled": true
+  },
+  {
+    "name": "transaction_core_3",
+    "listen": "[::]:36001",
+    "upstream": "core3:36000",
+    "enabled": true
+  },
+  {
+    "name": "raft_core_1",
+    "listen": "[::]:17001",
+    "upstream": "core1:17000",
+    "enabled": true
+  },
+ {
+    "name": "raft_core_2",
+    "listen": "[::]:27001",
+    "upstream": "core2:27000",
+    "enabled": true
+  },
+ {
+    "name": "raft_core_3",
+    "listen": "[::]:37001",
+    "upstream": "core3:37000",
+    "enabled": true
+  },  
+  {
+    "name": "bolt_core_1",
+    "listen": "[::]:7687",
+    "upstream": "core1:17687",
+    "enabled": true
+  },
+  {
+    "name": "bolt_core_2",
+    "listen": "[::]:8687",
+    "upstream": "core2:27687",
+    "enabled": true
+  },
+  {
+    "name": "bolt_core_3",
+    "listen": "[::]:9687",
+    "upstream": "core3:37687",
+    "enabled": true
+  },
+  {
+    "name": "http_core_1",
+    "listen": "[::]:7474",
+    "upstream": "core1:17474",
+    "enabled": true
+  },
+  {
+    "name": "http_core_2",
+    "listen": "[::]:8474",
+    "upstream": "core2:27474",
+    "enabled": true
+  },
+  {
+    "name": "http_core_3",
+    "listen": "[::]:9474",
+    "upstream": "core3:37474",
+    "enabled": true
+  }
+
+]
